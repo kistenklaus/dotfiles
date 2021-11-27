@@ -216,14 +216,8 @@ exec --no-startup-id xrandr --output eDP --brightness 0.4
 #   name so to find your display name run "xrandr --query" the name can be 
 #   HDMI DVI eDP ... so replace eDP with your latop display name this should be work
 
-
-
-
-
 # screen capture
 bindsym Print exec flameshot gui
-
-
 
 #   Web browser
 bindsym $mod+F2 exec firefox
@@ -278,17 +272,17 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-bindsym l exec --no-startup-id i3exit lock, mode "default"
-bindsym s exec --no-startup-id i3exit suspend, mode "default"
-bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-bindsym e exec --no-startup-id i3exit logout, mode "default"
-bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-bindsym r exec --no-startup-id i3exit reboot, mode "default"
-bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
 # exit system mode: "Enter" or "Escape"
-bindsym Return mode "default"
-bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 
@@ -366,10 +360,26 @@ assign [class="discord"] workspace $ws7
 
 default_border pixel 3
 
+exec_always --no-startup-id compton --config ~/.config/compton/compton.conf
+
 #fix floating
-for_window [title="Preferences$"] floating enable
+# Plasma compatibility improvements
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+
+for_window [class="yakuake"] floating enable
+for_window [class="systemsettings"] floating enable
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move down 450px
+no_focus [class="plasmashell" window_type="notification"]
 
 #no focus on hover
 focus_follows_mouse no
