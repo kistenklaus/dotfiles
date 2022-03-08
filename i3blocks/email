@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+# Requires https://www.google.com/settings/security/lesssecureapps for gmail.
+
+COUNT=`curl -su karlsasssie@gmail.com:Kistenklaus007 https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+COUNT=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
+if [ "$COUNT" = "0" ]; then
+	echo ""
+else
+	echo "$COUNT"
+
+fi

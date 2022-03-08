@@ -1,23 +1,19 @@
-
 bar {
-    status_command i3blocks
-    #status_command exec ~/.config/i3status/net-speed.sh
+    status_command i3blocks -c ~/.config/i3/i3blocks/config
     position bottom
     output primary
     tray_output none
 
     strip_workspace_numbers yes
     colors {
-# change borders
-        background #000000
+        background #141414
         statusline #FFFFFF
-        separator  #FFFFFF
+        separator  #00b0ef
 
-#                          border  backgr. text
-        focused_workspace  #FFFFFF #000000 #FFFFFF
-        active_workspace   #FFFFFF #000000 #FFFFFF
-        inactive_workspace #000000 #000000 #EEE8D5
-        binding_mode       #FFFF00 #000000 #FFFF00
-        urgent_workspace   #FF4400 #FF4400 #FFFFFF
+        focused_workspace  #00b0ef #141414 #FFFFFF
+        active_workspace   #00b0ef #141414 #FFFFFF
+        inactive_workspace #141414 #141414 #EEE8D5
+        binding_mode       #FFFF00 #141414 #FFFF00
+        urgent_workspace   #FF7066 #141414 #FFFFFF
     } 
 }

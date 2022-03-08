@@ -1,0 +1,11 @@
+
+for_window [title="dropdown"] floating enable
+for_window [title="dropdown"] move scratchpad
+for_window [title="dropdown"] resize set 1850 1000
+for_window [title="dropdown"] border pixel 5
+
+exec_always --no-startup-id alacritty -t dropdown
+
+bindsym $mod+u scratchpad show; move position center
+bindsym $mod+Shift+u move scratchpad
+
