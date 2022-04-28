@@ -4,8 +4,6 @@ interval=persist
 markup=pango
 LABEL=
 
-
-
 #[mediaplayer]
 #command=~/.config/i3blocks/mediaplayer
 #instance=spotify

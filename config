@@ -1,12 +1,14 @@
 set $mod Mod4
-include ~/.config/i3/keys
-include ~/.config/i3/workspaces
-include ~/.config/i3/scatchpad
-include ~/.config/i3/settings
-include ~/.config/i3/theme
-include ~/.config/i3/i3bar
-include ~/.config/i3/floating
-include ~/.config/i3/autostart
+include ~/.config/i3/keys.i3config
+include ~/.config/i3/workspaces.i3config
+include ~/.config/i3/scatchpad.i3config
+include ~/.config/i3/settings.i3config
+include ~/.config/i3/theme.i3config
+#include ~/.config/i3/i3bar.i3config
+include ~/.config/i3/default_i3bar.i3config
+include ~/.config/i3/floating.i3config
+include ~/.config/i3/autostart.i3config
+include ~/.config/i3/gabs.i3config
 
 client.focused #00b0ef #00b0ef #141414 #ff7066
 client.focused_inactive #141414 #141414 #00b0ef #472b2a
