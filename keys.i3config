@@ -1,4 +1,6 @@
 # Set shut down, restart and locking features
+bindsym $mod+g exec nemo
+
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
@@ -83,7 +85,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=15' -l 5"
+bindsym $mod+d exec rofi -show drun
 
 # change focus
 bindsym $mod+j focus left
@@ -182,3 +184,5 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+bindsym Print exec --no-startup-id flameshot gui

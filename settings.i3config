@@ -1,7 +1,7 @@
 focus_follows_mouse no
-default_border pixel 1
+default_border pixel 2
 
-default_floating_border pixel 1
+default_floating_border pixel 2
 hide_edge_borders smart
 
 

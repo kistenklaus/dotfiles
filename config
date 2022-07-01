@@ -5,7 +5,7 @@ include ~/.config/i3/scatchpad.i3config
 include ~/.config/i3/settings.i3config
 include ~/.config/i3/theme.i3config
 #include ~/.config/i3/i3bar.i3config
-include ~/.config/i3/default_i3bar.i3config
+# include ~/.config/i3/default_i3bar.i3config
 include ~/.config/i3/floating.i3config
 include ~/.config/i3/autostart.i3config
 include ~/.config/i3/gabs.i3config

@@ -8,8 +8,6 @@
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-#assign wallpaper
-exec_always dwall -s moon
 
 # set keyboard layout
 exec --no-startup-id xxkb
@@ -17,15 +15,20 @@ exec_always "setxkbmap -layout de"
 
 exec --no-startup-id lxsession
 exec_always --no-startup-id dunst
-exec_always --no-startup-id compton --config ~/.config/compton/compton.conf
 exec --no-startup-id volumeicon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
-exec --no-startup-id manjaro-hello
+exec --no-startup-id set vsync true
+exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+exec --no-startup-id mailspring -b
+exec --no-startup-id blueman-applet
+# exec --no-startup-id pamac-tray
+# exec --no-startup-id clipit
+exec_always $HOME/.config/i3/polybar/launch.sh
 
-exec alacritty
+#assign wallpaper
+exec_always dwall -s tokyo
+
+
 exec discord

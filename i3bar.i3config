@@ -1,20 +1,18 @@
-
-bar {
-    #
-    status_command i3blocks -c ~/.config/i3/i3blocks/config
-    output primary
-    tray_output none
-
-    strip_workspace_numbers yes
-    colors {
-        background #141414
-        statusline #FFFFFF
-        separator  #00b0ef
-
-        focused_workspace  #00b0ef #141414 #FFFFFF
-        active_workspace   #00b0ef #141414 #FFFFFF
-        inactive_workspace #141414 #141414 #EEE8D5
-        binding_mode       #FFFF00 #141414 #FFFF00
-        urgent_workspace   #FF7066 #141414 #FFFFFF
-    } 
-}
+# bar {
+#     status_command i3blocks -c ~/.config/i3/i3blocks/config
+#     output primary
+#     tray_output none
+#
+#     strip_workspace_numbers yes
+#     colors {
+#         background #141414
+#         statusline #FFFFFF
+#         separator  #00b0ef
+#
+#         focused_workspace  #00b0ef #141414 #FFFFFF
+#         active_workspace   #00b0ef #141414 #FFFFFF
+#         inactive_workspace #141414 #141414 #EEE8D5
+#         binding_mode       #FFFF00 #141414 #FFFF00
+#         urgent_workspace   #FF7066 #141414 #FFFFFF
+#     }
+# }

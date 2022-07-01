@@ -1,5 +1,5 @@
 
-font pango:DejaVu Sans Mono 12
+font JetBrains Mono 12
 #   color 
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
