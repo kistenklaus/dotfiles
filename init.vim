@@ -32,6 +32,7 @@ nmap <leader>l <Action>(ReformatCode)
 
 nmap gr <Action>(GotoRelated)
 nmap gd <Action>(GotoImplementation)
+nmap gn <Action>(ShowNavBar)
 
 nmap <leader>r <Action>(RenameElement)
 nmap <leader>c <Action>(Stop)
