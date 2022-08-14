@@ -10,6 +10,8 @@ let g:argtextobj_pairs="[:],(:),<:>"
 set showmode
 set so=5
 set incsearch
+set visualbell
+set noerrorbells
 set nu
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 
