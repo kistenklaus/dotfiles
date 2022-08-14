@@ -26,8 +26,8 @@ set ideastatusicon=gray
 nmap <leader>dd <Action>(CloseContent)
 nmap <leader>d! <Action>(CloseAllEditorsButActive)
 nmap <leader>w <Action>(HideAllWindows)
-nmap <leader>e <Action>(ActivateProjectToolWindow)
-nmap <leader>t <Action>(ActivateTerminalToolWindow)
+""" nmap <leader>e <Action>(ActivateProjectToolWindow)
+""" nmap <leader>t <Action>(ActivateTerminalToolWindow)
 nmap <leader>l <Action>(ReformatCode)
 
 nmap gr <Action>(GotoRelated)
@@ -41,7 +41,7 @@ nmap <leader>fc <Action>(GotoClass)
 nmap <leader>fl <Action>(FindInPath)
 
 nmap <leader>a <Action>(GotoAction)
-nmap <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+""" nmap <leader>h <Action>(Vcs.ShowTabbedFileHistory)
 nmap <leader>n <Action>(GotoNextError)
 
 nmap <leader>b <Action>(ToggleLineBreakpoint)
