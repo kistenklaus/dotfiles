@@ -49,4 +49,4 @@ for_window [class="Xfburn"] floating enable
 for_window [title="FLOATING"] floating enable
 for_window [class="Nemo"] floating enable
 for_window [title="splash"] floating enable
-
+for_window [title="Help"] floating enable; position center;
