@@ -178,4 +178,4 @@ export BROWSER=/sbin/firefox
 
 alias pls="sudo"
 alias r="ranger"
-
+alias vid="neovide --multigrid"
