@@ -1,0 +1,37 @@
+{
+  {
+    module = "minimal",
+    name = "minimal",
+    optional = false
+  },
+  {
+    module = "hex-color-preview",
+    name = "color-preview",
+    optional = true,
+    dependencies = {
+      {
+        name = "minimal"
+        optional = false
+      }
+    }
+  },
+  {
+    module = "lsp-path",
+    optional = true,
+    dependencies = {
+      {
+        name = "minimal",
+        optional = false
+      }
+    }
+  },
+  {
+    module = "lsp-buffer",
+    optional = true,
+    dependencies = {
+      {
+        name = "minimal",
+      }
+    }
+  }
+}
