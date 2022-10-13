@@ -1,3 +1,5 @@
+local M = {}
+
 local function configure()
   local cmp_status_ok, cmp = pcall(require, "cmp")
 
@@ -130,15 +132,20 @@ local function configure()
       native_menu = false,
     },
   })
-
 end
 
-return {
-  "hrsh7th/nvim-cmp",
-  config = configure,
-  requires = {
-    "L3MON4D3/LuaSnip",
-    --"hrsh7th/cmp-buffer",
-    "saadparwaiz1/cmp_luasnip"
-  }
-}
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages(
+    {
+      "hrsh7th/nvim-cmp",
+      config = configure,
+      requires = {
+        "L3MON4D3/LuaSnip",
+        --"hrsh7th/cmp-buffer",
+        "saadparwaiz1/cmp_luasnip"
+      }
+    }
+  )
+end
+
+return M

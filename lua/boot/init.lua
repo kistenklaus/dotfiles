@@ -1,142 +1,13 @@
 local M = {}
 
-function M:set_defaults()
-  require("boot.options"):set()
-  require("boot.colorscheme"):set()
-  require("boot.keymap"):set()
-end
-
-function M:set_reboot_command()
-  vim.api.nvim_create_user_command("Reboot", function()
-    M:reboot()
-  end, {})
-end
-
-function M:set_layer_controll_commands()
-  vim.api.nvim_create_user_command("ListLayers", function()
-    for _, layer in pairs(self.layers) do
-      local status
-      if layer.enabled then
-        status = " active "
-      else
-        if layer.err ~= nil then
-          status = layer.err
-        else
-          status = "inactive"
-        end
-      end
-
-      vim.notify("[" .. status .. "] " .. layer.name, vim.log.levels.INFO)
-    end
-  end, {})
-
-  vim.api.nvim_create_user_command("EnableLayer", function(opts)
-    local name = opts.args
-    for _, layer in pairs(self.layers) do
-      if (layer.name == name) then
-        if (layer.err ~= nil) then
-          vim.notify("can't enable layer with error", vim.log.levels.ERROR)
-          return
-        end
-        layer.enabled = true
-        self:reboot()
-        return
-      end
-    end
-    vim.notify("there is no layer called " .. name, vim.log.levels.WARN)
-  end, { nargs = 1 })
-
-
-  vim.api.nvim_create_user_command("DisableLayer", function(opts)
-    local name = opts.args
-    for _, layer in pairs(self.layers) do
-      if (layer.name == name) then
-        layer.enabled = false
-        self:reboot()
-        return
-      end
-    end
-    vim.notify("there is no layer called " .. name, vim.log.levels.WARN)
-  end, { nargs = 1 })
-end
-
-function M:set_global_commands()
-  self:set_reboot_command()
-  self:set_layer_controll_commands()
-end
-
-function M:setup_on_file_change_event()
-  vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-    pattern = { "*" },
-    callback = function()
-    end
-  })
-end
-
-function M:initalize_packer()
-  local fn = vim.fn
-  -- Automatically install packer
-  local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system {
-      "git",
-      "clone",
-      "--depth",
-      "1",
-      "https://github.com/wbthomason/packer.nvim",
-      install_path,
-    }
-    print "Installing packer close and reopen Neovim..."
-    vim.cmd [[packadd packer.nvim]]
-  end
-
-  -- Use a protected call so we don't error out on first use
-  local status_ok, packer = pcall(require, "packer")
-  if not status_ok then
-    return
-  else
-    self.packer = packer
-  end
-
-  packer.init {
-    ensure_dependencies = true,
-    opt_default = false,
-    transitive_opt = true,
-    transitive_disable = true,
-    display = {
-      open_fn = function()
-        return require("packer.util").float { border = "rounded" }
-      end,
-    },
-  }
-
-end
-
-function M:load_plugins()
-  if (self.packer == nil) then M:initalize_packer() end
-  self.packer.startup(function(use)
-    -- make sure to add this line to let packer manage itself
-    use 'wbthomason/packer.nvim'
-    use(require("boot.plugins.cmp"))
-    use(require("boot.plugins.lspconfig"))
-
-
-    for _, layer in pairs(self.layers) do
-      if (layer.enabled) then
-        pcall(layer.module.packer, layer.module, use)
-      end
-    end
-    if PACKER_BOOTSTRAP then
-      require("packer").sync()
-    end
-  end)
-end
 
 function M:lsp_on_server_ready(server)
   local opts = {}
-  for _, layer in pairs(self.layers) do
-    if(layer.enabled) then
-      local ok, layer_opts = pcall(layer.module.lsp_on_server_ready, layer.module, server)
+  local moduleio = require("boot.moduleio")
+  for _, id in ipairs(self.sorted_active_module_ids) do
+    local mod = moduleio:get_module_by_id(id)
+    if (mod.instance ~= nil and mod.active == true and mod.instance.lsp_on_server_ready ~= nil) then
+      local ok, layer_opts = pcall(mod.lsp_on_server_ready, mod.instance, server)
       if ok and layer_opts ~= nil then
         opts = vim.tbl_deep_extend("force", layer_opts, opts)
       end
@@ -145,82 +16,127 @@ function M:lsp_on_server_ready(server)
   return opts
 end
 
-function M:initalize_layers()
-  local err = false
-  for _, layer in pairs(self.layers) do
-    if (layer.enabled and not err) then
-      local ok = pcall(layer.module.init, layer.module)
-      if ok then
-        layer.loaded = true
+--read module.json and settings.json
+--select active plugins
+--require all modules
+----store module in module.instance
+----if require fails store nil
+--sort active plugins in topological order
+function M:boot()
+  local moduleio = require("boot.moduleio")
+  --read module.json
+  --require all modules and detect errors
+  moduleio:require_all_modules()
+  --read settings.json and sort active_modules
+  --sort active modules
+  self.sorted_active_module_ids = moduleio:sort_active_module_ids()
+
+  ::before_load_plugins::
+  local ok = pcall(self.load_plugins, self)
+  if not ok then
+    self.sorted_active_module_ids = moduleio:sort_active_module_ids()
+    goto before_load_plugins
+  end
+
+  local old = self.sorted_active_module_ids
+
+  ::before_setup::
+  ok = pcall(self.startup, self)
+  if not ok then
+    self.sorted_active_module_ids = moduleio:sort_active_module_ids()
+    goto before_setup
+  end
+end
+
+--collect all plugin_configs in any order
+--load all plugin_configs in any order
+--disable plugins from non-active modules
+--don't load plugins from modules with module.instance == nil
+function M:load_plugins()
+  local plugin_manager = require("boot.plugins")
+  local moduleio = require("boot.moduleio")
+  local modules = moduleio:get_modules()
+  for i = 1, #modules do
+    local mod = modules[i]
+    --try to call module:plugins(plugin_manager)
+    if (mod.instance ~= nil and mod.instance.plugins ~= nil) then
+      if mod.active then
+        plugin_manager:enable_next_plugins()
       else
-        if (layer.loaded) then
-          pcall(layer.module.dispose, layer.module)
-          layer.loaded = false
-        end
-        err = true
+        plugin_manager:disable_next_plugins()
       end
-    else
-      if (layer.loaded) then
-        pcall(layer.module.dispose, layer.module)
-        layer.loaded = false
+      --TODO improved error handling
+      ----disable plugin when error in mod.plugins happens
+      ----don't change in settings just mark in moduleio as error prune and disable it temporary
+      if (mod.instance.plugins ~= nil) then
+        local ok, err = pcall(mod.instance.plugins, mod.instance, plugin_manager)
+        if not ok then
+          moduleio:module_has_error(i)
+          self.sorted_active_module_ids = nil
+          error("failed to get plugins for module: " .. mod.name .. "\n" .. err)
+          return
+        end
+      end
+    end
+  end
+  plugin_manager:enable_next_plugins()
+  --TODO error checking
+  require("boot.plugins.cmp"):plugins(plugin_manager)
+  require("boot.plugins.lspconfig"):plugins(plugin_manager)
+  require("boot.plugins"):init_packer()
+end
+
+--initalize defaults
+--initalize all active plugins (in topological order)
+--setup lsp_server_on_ready for all active plugins
+--	(in topological order)
+function M:startup()
+  local moduleio = require("boot.moduleio")
+  --setup defaults
+  require("boot.options"):set()
+  require("boot.colorscheme"):set()
+  require("boot.keymap"):set()
+  --setup global commands
+  vim.api.nvim_create_user_command("Reboot", function()
+    M:reboot()
+  end, {})
+
+  for _, id in ipairs(self.sorted_active_module_ids) do
+    local mod = moduleio:get_module_by_id(id)
+    if mod.instance ~= nil and mod.instance.init ~= nil then
+      local ok, err = pcall(mod.instance.init, mod.instance)
+      if not ok then
+        moduleio:module_has_error(id)
+        --TODO dispose previous attempts
+        error("failed to initalize module: " .. mod.name .. "\n" .. err)
       end
     end
   end
 end
 
-function M:dispose_layers()
-  for _, layer in pairs(self.layers) do
-    if layer.loaded then
-      pcall(layer.module.dispose, layer.module)
-      layer.loaded = false
+--unbind all keybinding of active_modules
+--unbind all user commands of active_modules
+function M:dispose()
+  local moduleio = require("boot.moduleio")
+  for i = #self.sorted_active_module_ids, 1, -1 do
+    local mod = moduleio:get_module_by_id(self.sorted_active_module_ids[i])
+    if (mod.dispose ~= nil) then pcall(mod.dispose, mod) end
+    if (mod.dispose ~= nil) then pcall(mod.cleanup, mod) end
+  end
+  --unload all modules
+  moduleio:unrequire_all_modules()
+  moduleio:reset()
+  require("boot.settingio"):reset()
+  for k, _ in pairs(package.loaded) do
+    if (k == "boot.moduleio" or k == "boot.settingio") then
+      package.loaded[k] = nil
     end
   end
 end
 
 function M:reboot()
-  self:dispose_layers()
-  self:set_defaults()
-  self:set_global_commands()
-  self:setup_on_file_change_event()
-  self:initalize_layers()
-end
-
-function M:startup(layer_list)
-  if self.layers ~= nil then
-    vim.notify("trying to initalize boot.lua twice", vim.log.levels.ERROR)
-    return
-  end
-  self.layers = {}
-  local err = false
-  for _, layer_name in pairs(layer_list) do
-    local require_ok, layer = pcall(require, layer_name)
-    if (err or not require_ok or layer == nil or layer == true) then
-      local errorMsg = nil
-      if (not require_ok or layer == nil or layer == true) then
-        errorMsg = " error  "
-      end
-      table.insert(self.layers, {
-        module = layer,
-        name = layer_name,
-        enabled = false,
-        loaded = false,
-        err = errorMsg
-      })
-      err = true
-    else
-      table.insert(self.layers, {
-        module = layer,
-        name = layer_name,
-        enabled = true,
-        loaded = false
-      })
-    end
-  end
-  self:set_defaults()
-  self:set_global_commands()
-  self:setup_on_file_change_event()
-  self:load_plugins()
-  self:initalize_layers()
+  self:dispose()
+  self:boot()
 end
 
 return M

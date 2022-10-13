@@ -1,0 +1,10 @@
+[
+  {
+    "name": "minimal",
+    "path": "modules.minimal"
+  },
+  {
+    "name": "transparent-background",
+    "path": "modules.transparent_background"
+  }
+]

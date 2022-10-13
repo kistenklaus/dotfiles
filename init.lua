@@ -1,13 +1,1 @@
-require("boot"):startup({
-  "minimal",
-  "statusline-lualine",
-  "lsp-buffer",
-  "lsp-path",
-  "lsp-snippets",
-  "hex-color-preview",
-  "telescope-fuzzy-finder",
-  "language-cpp",
-  "terminal",
-  "neovide",
-  "latex",
-})
+require("boot"):boot()

@@ -1,3 +1,5 @@
+local M = {}
+
 local function configure()
   local lspconfig_ok, _ = pcall(require, "lspconfig")
   if not lspconfig_ok then
@@ -16,18 +18,24 @@ local function configure()
   end
 end
 
-return {
-  {
-    "neovim/nvim-lspconfig",
-    config = configure,
-    requires = {
-      "hrsh7th/cmp-nvim-lsp"
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages(
+    {
+      "neovim/nvim-lspconfig",
+      config = configure,
+      requires = {
+        "hrsh7th/cmp-nvim-lsp"
+      }
     }
-  },
-  {
-    "williamboman/nvim-lsp-installer",
-    requires = {
-      "neovim/nvim-lspconfig"
+  )
+  plugin_manager:add_packer_packages(
+    {
+      "williamboman/nvim-lsp-installer",
+      requires = {
+        "neovim/nvim-lspconfig"
+      }
     }
-  }
-}
+  )
+end
+
+return M

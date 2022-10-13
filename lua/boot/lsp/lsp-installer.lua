@@ -12,7 +12,10 @@ lsp_installer.on_server_ready(function(server)
     capabilities = require("boot.lsp.handlers").capabilities,
   }
 
-  local require_ok, boot_opts = pcall(require, "boot.lsp.settings."..server.name)
+  local require_ok, boot_opts = pcall(require, "boot.lsp.settings." .. server.name)
+  --get all active modules
+  --call on_server_ready on all active modules in topological order.
+
   if require_ok then
     opts = vim.tbl_deep_extend("force", boot_opts, opts)
   end

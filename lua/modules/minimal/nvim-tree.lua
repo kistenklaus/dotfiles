@@ -1,3 +1,5 @@
+local M = {}
+
 local function configure()
   -- following options are the default
   -- each of these are documented in `:help nvim-tree.OPTION_NAME`
@@ -43,8 +45,6 @@ local function configure()
       timeout = 500,
     },
     view = {
-      width = 30,
-      height = 30,
       hide_root_folder = false,
       side = "left",
       --auto_resize = true,
@@ -71,12 +71,17 @@ local function configure()
   keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 end
 
-return {
-  'kyazdani42/nvim-tree.lua',
-  config = configure,
-  requires = {
-    'kyazdani42/nvim-web-devicons'
-  },
-  tag = 'nightly'
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages(
+    {
+      'kyazdani42/nvim-tree.lua',
+      config = configure,
+      requires = {
+        'kyazdani42/nvim-web-devicons'
+      },
+      tag = 'nightly'
+    }
+  )
+end
 
-}
+return M
