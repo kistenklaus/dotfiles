@@ -38,8 +38,6 @@ function M:boot()
     goto before_load_plugins
   end
 
-  local old = self.sorted_active_module_ids
-
   ::before_setup::
   ok = pcall(self.startup, self)
   if not ok then
@@ -101,6 +99,46 @@ function M:startup()
     M:reboot()
   end, {})
 
+  vim.api.nvim_create_user_command("Enable", function(param)
+    local settingio = require("boot.settingio")
+    settingio:enable_module(param.args)
+    self:reboot()
+  end, {
+    nargs = 1,
+    complete = function(ArgLead, CmdLine, CursorPos)
+      --get all disabled modules
+      local options = require("boot.settingio"):get_settings().disabled_module_names
+      local true_options = {}
+      for name, _ in pairs(options) do
+        if name:match("^" .. ArgLead) then
+          table.insert(true_options, name)
+        end
+      end
+      return true_options
+    end
+  })
+
+  vim.api.nvim_create_user_command("Disable", function(param)
+    local settingio = require("boot.settingio")
+    settingio:disable_module(param.args)
+    self:reboot()
+  end, {
+    nargs = 1,
+    complete = function(ArgLead, CmdLine, CursorPos)
+      --get all disabled modules
+      local options = self.sorted_active_module_ids
+      local true_options = {}
+      for _, id in pairs(options) do
+        local name = moduleio:get_module_by_id(id).name
+        if (name:match("^" .. ArgLead)) then
+          table.insert(true_options, name)
+        end
+      end
+      return true_options
+    end
+
+  })
+
   for _, id in ipairs(self.sorted_active_module_ids) do
     local mod = moduleio:get_module_by_id(id)
     if mod.instance ~= nil and mod.instance.init ~= nil then
@@ -112,6 +150,7 @@ function M:startup()
       end
     end
   end
+  require("boot.lsp"):init()
 end
 
 --unbind all keybinding of active_modules

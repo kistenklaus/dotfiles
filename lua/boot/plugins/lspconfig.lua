@@ -11,11 +11,6 @@ local function configure()
     vim.notify("failed to require boot.lsp", vim.log.levels.ERROR)
     return
   end
-  local init_ok, _ = pcall(module.init, module)
-  if not init_ok then
-    vim.notify("failed to initalize boot.lsp", vim.log.levels.ERROR)
-    return
-  end
 end
 
 function M:plugins(plugin_manager)

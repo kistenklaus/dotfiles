@@ -7,9 +7,9 @@ local function read_settings_from_file()
     local content = file:read("*ab")
     local parsed = vim.json.decode(content)
     local settings = {}
+    settings.disabled_module_names = {}
     for attrib, value in pairs(parsed) do
       if (attrib == "disabled_modules" ) then
-        settings.disabled_module_names = {}
         for _, name in pairs(value) do
           settings.disabled_module_names[name] = true
         end
@@ -22,6 +22,24 @@ local function read_settings_from_file()
     local default = {}
     default.disabled_module_names = {}
     return default
+  end
+end
+
+local function write_settings_to_file(settings)
+  local path = os.getenv("HOME") .. "/.config/nvim/settings.json"
+  local file = io.open(path, "w+")
+  if file then
+    --pre processing
+    local obj = {}
+    obj.disabled_modules = {}
+
+    for name, b in pairs(settings.disabled_module_names) do
+      table.insert(obj.disabled_modules, name)
+    end
+    local encoded = vim.json.encode(obj)
+    vim.notify(encoded)
+    file:write(encoded)
+    file:close()
   end
 end
 
@@ -59,6 +77,22 @@ function M:reset()
   self.deprecated_settings = true
   self.settings = nil
   self.version = nil
+end
+
+function M:enable_module(name)
+  self:require_settings()
+  local is_disabled = self.settings.disabled_module_names[name] == true
+  if not is_disabled then return end
+  self.settings.disabled_module_names[name] = nil
+  write_settings_to_file(self.settings)
+end
+
+function M:disable_module(name)
+  self:require_settings()
+  local is_disabled = self.settings.disabled_module_names[name] == true
+  if is_disabled then return end
+  self.settings.disabled_module_names[name] = true
+  write_settings_to_file(self.settings)
 end
 
 return M

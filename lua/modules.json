@@ -6,5 +6,10 @@
   {
     "name": "transparent-background",
     "path": "modules.transparent_background"
+  },
+  {
+    "name": "latex",
+    "path": "modules.latex"
   }
+
 ]

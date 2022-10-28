@@ -66,8 +66,6 @@ function M:init_packer()
         use(plugin_config)
       end
     end
-    --use(require("boot.plugins.cmp"))
-    --use(require("boot.plugins.lspconfig"))
 
     if PACKER_BOOTSTRAP then
       require("packer").sync()
