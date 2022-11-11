@@ -160,6 +160,7 @@ function M:require_all_modules()
       self.unsorted_modules[i].instance = instance
     else
       self.unsorted_modules[i].error = true
+      vim.notify("failed to require module " .. module.name .. "-- Error:" .. instance) -- instance = error here.
     end
   end
 end

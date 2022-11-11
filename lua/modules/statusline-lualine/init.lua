@@ -49,19 +49,18 @@ local function bufferline_config()
 end
 
 function M:init()
-  lualine_config()
 end
 
 function M:dispose()
 end
 
-function M:packer(use)
-  use {
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages {
     'nvim-lualine/lualine.nvim',
     config = lualine_config,
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-  use {
+  plugin_manager:add_packer_packages {
     'akinsho/bufferline.nvim',
     config = bufferline_config,
     tag = "v2.*",

@@ -110,8 +110,10 @@ local function configure()
           nvim_lsp = "[LSP]",
           nvim_lua = "[LSP]",
           luasnip = "[Snippet]",
-          buffer = "[Buffer]",
           path = "[Path]",
+          spell = "[Spell]",
+          dictionary = "[Dict]",
+          buffer = "[Buffer]",
         })[entry.source.name]
         return vim_item
       end,
@@ -121,6 +123,8 @@ local function configure()
       { name = "nvim_lua" },
       { name = "luasnip" },
       { name = "path" },
+      { name = "spell"},
+      { name = "dictionary"},
       { name = "buffer" },
     },
     confirm_opts = {

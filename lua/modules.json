@@ -8,8 +8,56 @@
     "path": "modules.transparent_background"
   },
   {
+    "name": "german-dictionary",
+    "path": "modules.german_dictionary"
+  },
+  {
+    "name": "treesitter",
+    "path": "modules.treesitter"
+  },
+  {
+    "name": "toggleterm",
+    "path": "modules.toggleterm"
+  },
+  {
+    "name": "statusline",
+    "path": "modules.statusline-lualine"
+  },
+  {
+    "name": "telescope",
+    "path": "modules.telescope"
+  },
+  {
+    "name": "hex-color-preview",
+    "path": "modules.hex-color-preview"
+  },
+  {
+    "name": "buffer-completion",
+    "path": "modules.lsp-buffer"
+  },
+  {
+    "name": "path-completion",
+    "path": "modules.lsp-path"
+  },
+  {
+    "name": "snippet-completion",
+    "path": "modules.lsp-snippets"
+  },
+  {
+    "name": "neovide",
+    "path": "modules.neovide"
+  },
+  {
     "name": "latex",
     "path": "modules.latex"
+  },
+  {
+    "name": "latex-grammar",
+    "path": "modules.latex-grammar",
+    "dependencies": ["latex"]
+  },
+  {
+    "name": "spell-completion",
+    "path": "modules.lsp-spell"
   }
-
 ]

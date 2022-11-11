@@ -96,9 +96,9 @@ local function configure()
       media_files = {
         -- filetypes whitelist
         -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-        filetypes = {"png", "webp", "jpg", "jpeg"},
+        filetypes = { "png", "webp", "jpg", "jpeg" },
         find_cmd = "rg" -- find command (defaults to `fd`)
-      }      -- your extension configuration goes here:
+      } -- your extension configuration goes here:
       -- extension_name = {
       --   extension_config_key = value,
       -- }
@@ -108,18 +108,22 @@ local function configure()
 end
 
 function M:init()
-  require("telescope-fuzzy-finder.keymap"):set()
+  local builtin = require('telescope.builtin')
+  vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+  vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+  vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+  vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 end
 
 function M:dispose()
 end
 
-function M:packer(use)
-  use {
-  'nvim-telescope/telescope.nvim', tag = '0.1.0',
-  config = configure,
-  requires = {
-      {'nvim-lua/plenary.nvim'},
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages {
+    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    config = configure,
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'

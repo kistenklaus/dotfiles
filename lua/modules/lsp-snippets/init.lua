@@ -8,22 +8,22 @@ function M:dispose()
 
 end
 
-function M:packer(use)
-  use {
+function M:plugins(plugin_manager)
+  plugin_manager:add_packer_packages {
     "saadparwaiz1/cmp_luasnip",
     requires = {
       "hrsh7th/nvim-cmp",
     }
   }
 
-  use {
+  plugin_manager:add_packer_packages {
     "rafamadriz/friendly-snippets",
     requires = {
       "hrsh7th/nvim-cmp"
     },
   }
 
-  use {
+  plugin_manager:add_packer_packages {
     "L3MON4D3/LuaSnip"
   }
 

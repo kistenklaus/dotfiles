@@ -1,6 +1,5 @@
 local M = {}
 
-
 function M:lsp_on_server_ready(server)
   local opts = {}
   local moduleio = require("boot.moduleio")
@@ -24,6 +23,7 @@ end
 --sort active plugins in topological order
 function M:boot()
   local moduleio = require("boot.moduleio")
+
   --read module.json
   --require all modules and detect errors
   moduleio:require_all_modules()
@@ -39,9 +39,11 @@ function M:boot()
   end
 
   ::before_setup::
-  ok = pcall(self.startup, self)
+  local err;
+  ok, err = pcall(self.startup, self)
   if not ok then
     self.sorted_active_module_ids = moduleio:sort_active_module_ids()
+    vim.notify("STARTUP FAILED : " .. err)
     goto before_setup
   end
 end
@@ -94,6 +96,7 @@ function M:startup()
   require("boot.options"):set()
   require("boot.colorscheme"):set()
   require("boot.keymap"):set()
+
   --setup global commands
   vim.api.nvim_create_user_command("Reboot", function()
     M:reboot()
@@ -102,7 +105,7 @@ function M:startup()
   vim.api.nvim_create_user_command("Enable", function(param)
     local settingio = require("boot.settingio")
     settingio:enable_module(param.args)
-    self:reboot()
+    M:reboot()
   end, {
     nargs = 1,
     complete = function(ArgLead, CmdLine, CursorPos)
@@ -121,7 +124,7 @@ function M:startup()
   vim.api.nvim_create_user_command("Disable", function(param)
     local settingio = require("boot.settingio")
     settingio:disable_module(param.args)
-    self:reboot()
+    M:reboot()
   end, {
     nargs = 1,
     complete = function(ArgLead, CmdLine, CursorPos)
@@ -136,8 +139,9 @@ function M:startup()
       end
       return true_options
     end
-
   })
+
+  require("boot.lsp"):init()
 
   for _, id in ipairs(self.sorted_active_module_ids) do
     local mod = moduleio:get_module_by_id(id)
@@ -150,7 +154,7 @@ function M:startup()
       end
     end
   end
-  require("boot.lsp"):init()
+  return true
 end
 
 --unbind all keybinding of active_modules

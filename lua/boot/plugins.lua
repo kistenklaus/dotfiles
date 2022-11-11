@@ -4,7 +4,7 @@ function M:add_packer_packages(plugin_config)
   if self.packer_plugin_table == nil then self.packer_plugin_table = {} end
   --post processing
   if (self.next_plugins_disabled) then
-    --plugin_config.disable = true
+    plugin_config.disable = true
   end
   table.insert(self.packer_plugin_table, plugin_config)
 end
