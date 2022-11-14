@@ -80,24 +80,10 @@ function M:setup()
       download_url_template = "https://github.com/%s/releases/download/%s/%s",
     },
   }
-
-  local lsp_flags = {
-    -- This is the default in Nvim 0.7+
-    debounce_text_changes = 150,
-  }
-
-  -- Use an on_attach function to only map the following keys
-  -- after the language server attaches to the current buffer
-  local on_attach = require("boot.lsp.handlers").on_attach;
-
-  local lspconfig = require("lspconfig");
-
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
   --default language servers.
-  lspconfig.sumneko_lua.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
+  require("lspconfig").sumneko_lua.setup{
+    on_attach = require("boot.lsp.handlers").on_attach,
+    capabilities = require("boot.lsp.handlers").capabilities,
     settings = {
       Lua = {
         diagnostics = {
@@ -106,29 +92,6 @@ function M:setup()
       }
     }
   }
-
-  local util = require("lspconfig/util")
-
-  lspconfig.hls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    root_dir = function(filepath)
-      return (
-        util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project', ".hlsroot")(filepath)
-        or util.root_pattern('*.cabal', 'package.yaml', ".hlsroot")(filepath)
-     )
-    end,
-    single_file_support = true
-  }
-  lspconfig.cmake.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-  lspconfig.ccls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-
 end
 
 return M

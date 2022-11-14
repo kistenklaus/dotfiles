@@ -33,6 +33,7 @@ function M:set()
   vim.opt.wrap = false
   vim.opt.scrolloff = 8
   vim.opt.guifont = "monospace:h17"
+  vim.opt.termguicolors = true
 end
 
 return M

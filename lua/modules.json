@@ -59,5 +59,25 @@
   {
     "name": "spell-completion",
     "path": "modules.lsp-spell"
+  },
+  {
+    "name": "c/cpp",
+    "path": "modules.cpp"
+  },
+  {
+    "name": "ansi-colors",
+    "path": "modules.ansi-colors"
+  },
+  {
+    "name": "commenting",
+    "path": "modules.commenting"
+  },
+  {
+    "name": "haskell",
+    "path": "modules.haskell"
+  },
+  {
+    "name": "git-blame",
+    "path": "modules.git-signs"
   }
 ]

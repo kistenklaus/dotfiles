@@ -59,11 +59,11 @@ function M:set()
   vim.api.nvim_exec(
     [[
 function! _NextBuffer()
-    if &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt"
+    if &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt" || &buftype=="quickfix"
         return
     endif
     :bnext
-    while &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt"
+    while &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt" || &buftype=="quickfix"
         :bnext
     endwhile
     call feedkeys("\<ESC>")
@@ -72,11 +72,11 @@ nnoremap <Tab> :call _NextBuffer()<CR>
 
 
 function! _PrevBuffer()
-    if &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt"
+    if &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt" || &buftype=="quickfix"
         return
     endif
     :bprev
-    while &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt"
+    while &buftype=="terminal" || &buftype=="nofile" || &buftype=="prompt" || &buftype=="quickfix"
         :bprev
     endwhile
     call feedkeys("\<ESC>")

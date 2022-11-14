@@ -7,10 +7,7 @@ local function configure()
     return
   end
 
-  telescope.load_extension('media_files')
-
   local actions = require "telescope.actions"
-
   telescope.setup({
     defaults = {
 
@@ -98,13 +95,17 @@ local function configure()
         -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
         filetypes = { "png", "webp", "jpg", "jpeg" },
         find_cmd = "rg" -- find command (defaults to `fd`)
-      } -- your extension configuration goes here:
-      -- extension_name = {
-      --   extension_config_key = value,
-      -- }
-      -- please take a look at the readme of the extension you want to configure
+      },
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {
+          -- even more opts
+        }
+      }
     }
   })
+
+  telescope.load_extension('media_files')
+  telescope.load_extension("ui-select")
 end
 
 function M:init()
@@ -130,6 +131,9 @@ function M:plugins(plugin_manager)
       },
       {
         'nvim-telescope/telescope-media-files.nvim'
+      },
+      {
+        'nvim-telescope/telescope-ui-select.nvim'
       }
     }
   }
