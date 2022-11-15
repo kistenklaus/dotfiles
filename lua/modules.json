@@ -79,5 +79,9 @@
   {
     "name": "git-blame",
     "path": "modules.git-signs"
+  },
+  {
+    "name": "rust",
+    "path": "modules.rust"
   }
 ]
