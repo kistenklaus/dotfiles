@@ -83,5 +83,13 @@
   {
     "name": "rust",
     "path": "modules.rust"
+  },
+  {
+    "name": "python",
+    "path": "modules.python"
+  },
+  {
+    "name": "javascript",
+    "path": "modules.javascript"
   }
 ]
