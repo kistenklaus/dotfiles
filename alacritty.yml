@@ -1,7 +1,8 @@
 window:
-  opacity: 0.85
+  opacity: 0.95
 
 font:
   normal:
     family: Jetbrains Mono
-  size: 16.0
+    # family: Hack Nerd Font Mono
+  size: 14.0
