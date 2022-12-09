@@ -40,7 +40,7 @@ function M:init()
       additional_vim_regex_highlighting = false,
     },
   }
-  vim.opt.syntax = "off"
+  vim.opt.syntax = "false"
 end
 
 function M:plugins(plugin_manager)

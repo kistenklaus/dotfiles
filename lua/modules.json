@@ -91,5 +91,14 @@
   {
     "name": "javascript",
     "path": "modules.javascript"
+  },
+  {
+    "name": "dart",
+    "path": "modules.dart"
+  },
+  {
+    "name": "flutter",
+    "path": "modules.flutter",
+    "dependencies": ["flutter"]
   }
 ]
