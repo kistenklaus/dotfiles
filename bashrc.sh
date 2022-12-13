@@ -179,3 +179,10 @@ export BROWSER=/sbin/firefox
 alias pls="sudo"
 alias r="ranger"
 alias vid="neovide --multigrid"
+alias cal="gcalcli agenda"
+export ANDROID_NDK="$HOME/Android/Sdk/ndk/"
+export PATH="$PATH:$HOME/flutter/bin"
+export CPATH="$(clang -v 2>&1 | grep "Selected GCC installation" | rev | cut -d' ' -f1 | rev)/include"
+
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export PATH="$PATH:$GEM_HOME/bin"
