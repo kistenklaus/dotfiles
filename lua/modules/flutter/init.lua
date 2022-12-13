@@ -1,11 +1,7 @@
 local M = {}
 
 local function flutter_tools_config()
-    require("flutter-tools").setup{
-      ui = {
-        notification_style = "native"
-      }
-    } -- use defaults
+    require("flutter-tools").setup{} -- use defaults
 end
 
 function M:init()
