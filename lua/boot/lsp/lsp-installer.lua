@@ -80,8 +80,9 @@ function M:setup()
       download_url_template = "https://github.com/%s/releases/download/%s/%s",
     },
   }
+  local lspconfig = require("lspconfig")
   --default language servers.
-  require("lspconfig").sumneko_lua.setup{
+  lspconfig.sumneko_lua.setup{
     on_attach = require("boot.lsp.handlers").on_attach,
     capabilities = require("boot.lsp.handlers").capabilities,
     settings = {
@@ -92,6 +93,11 @@ function M:setup()
       }
     }
   }
+
+  local jsonls_opt = require("boot.lsp.settings.jsonls")
+  lspconfig.jsonls.setup(jsonls_opt)
+
+
 end
 
 return M

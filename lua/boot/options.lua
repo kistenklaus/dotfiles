@@ -1,5 +1,4 @@
 local M = {}
-
 function M:set()
   vim.opt.backup = false
   vim.opt.clipboard = "unnamedplus"
@@ -34,6 +33,7 @@ function M:set()
   vim.opt.scrolloff = 8
   vim.opt.guifont = "monospace:h17"
   vim.opt.termguicolors = true
+  vim.opt.relativenumber = true
 end
 
 return M

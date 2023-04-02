@@ -100,5 +100,9 @@
     "name": "flutter",
     "path": "modules.flutter",
     "dependencies": ["flutter"]
+  },
+  {
+    "name": "harpoon",
+    "path": "modules.harpoon"
   }
 ]

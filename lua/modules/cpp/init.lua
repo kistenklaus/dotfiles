@@ -35,11 +35,22 @@ function M:init()
     on_attach = require("boot.lsp.handlers").on_attach,
     capabilities = require("boot.lsp.handlers").capabilities,
   }
+  -- local util = require("lspconfig/util");
+  -- local root_pattern = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git")
+
+  local cwd = vim.fn.getcwd()
   lspconfig.clangd.setup {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--suggest-missing-includes",
+      "--compile-commands-dir=" ..cwd
+    },
+    filetypes = { "c", "cpp", "objc", "objcpp" },
     on_attach = require("boot.lsp.handlers").on_attach,
     capabilities = require("boot.lsp.handlers").capabilities,
   }
-  
+
 end
 
 function M:plugins(plugin_manager)
