@@ -1,10 +1,26 @@
 local function configure()
   local lsp = require("lsp-zero")
+  local lspconfig = require("lspconfig")
+
   lsp.preset('recommended')
 
   local ls = require("utility").ls;
   local trimExt = require("utility").removeFileExtention;
   local attachHandlers = ls(os.getenv("HOME") .. "/.config/nvim/lua/lsp_attach")
+
+  local lsps = ls(os.getenv("HOME") .. "/.config/nvim/lua/lsp")
+
+  local required_lsps = {}
+  for i = 1, #lsps do
+    local name = trimExt(lsps[i]);
+    table.insert(required_lsps, name)
+  end
+  for i = 1, #attachHandlers do
+    local name = trimExt(attachHandlers[i])
+    table.insert(required_lsps, name)
+  end
+
+  lsp.ensure_installed(required_lsps)
 
   ---@diagnostic disable-next-line: unused-local
   lsp.on_attach(function(client, bufnr)
@@ -45,8 +61,6 @@ local function configure()
     },
   })
 
-  local lspconfig = require("lspconfig")
-  local lsps = ls(os.getenv("HOME") .. "/.config/nvim/lua/lsp")
 
   for i = 1, #lsps do
     local name = trimExt(lsps[i]);
