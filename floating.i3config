@@ -1,4 +1,4 @@
-
+for_window [class="^.*"] border pixel 0
 #fix floating
 # Plasma compatibility improvements
 for_window [window_role="pop-up"] floating enable
@@ -17,6 +17,7 @@ for_window [class="Plasmoidviewer"] floating enable; border none
 for_window [class="(?i)*nextcloud*"] floating disable
 for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move down 450px
 for_window [title="Android Emulator - Pixel2:5554" ] floating enable; border 5px;
+for_window [title="Alacritty" ] border none
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -50,3 +51,5 @@ for_window [title="FLOATING"] floating enable
 for_window [class="Nemo"] floating enable
 for_window [title="splash"] floating enable
 for_window [title="Help"] floating enable; position center;
+for_window [class="neovide"] fullscreen enable
+for_window [title=".*Android emulator.*"] resize shrink width 21px
