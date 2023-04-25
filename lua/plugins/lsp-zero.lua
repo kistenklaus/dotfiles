@@ -32,9 +32,9 @@ local function configure()
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
 
     vim.keymap.set("n", "<A-cr>", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<C-A-l>", function() vim.lsp.buf.format() end, opts)
 
     vim.keymap.set("i", "<F18>", function() vim.lsp.buf.rename() end, opts)
+    vim.keymap.set("n", "<C-A-l>", function() vim.lsp.buf.format() end, opts)
     vim.keymap.set("n", "<F18>", function() vim.lsp.buf.rename() end, opts)
 
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -52,6 +52,7 @@ local function configure()
   end)
 
   local cmp = require("cmp")
+  local cmp_action = lsp.cmp_action()
   cmp.setup({
     sources = {
       { name = 'path' },
@@ -59,6 +60,15 @@ local function configure()
       { name = 'buffer',  keyword_length = 3 },
       { name = 'luasnip', keyword_length = 2 },
     },
+    mapping = {
+      -- `Enter` key to confirm completion
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      -- Ctrl+Space to trigger completion menu
+      ['<C-Space>'] = cmp.mapping.complete(),
+      -- Navigate between snippet placeholder
+      ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+      ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+    }
   })
 
 
