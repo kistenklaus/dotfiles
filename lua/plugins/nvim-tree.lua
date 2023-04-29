@@ -1,4 +1,3 @@
-
 local function configure()
 	-- examples for your init.lua
 
@@ -22,7 +21,8 @@ local function configure()
 			dotfiles = true,
 		},
 	})
-	vim.keymap.set('n', '<leader>e', ":NvimTreeToggle<cr>", {noremap = true, silent = true})
+  local api = require("nvim-tree.api")
+	vim.keymap.set('n', '<leader>e', api.tree.toggle, {noremap = true})
 end
 
 return {

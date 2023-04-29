@@ -1,4 +1,3 @@
-
 vim.opt.clipboard = {"unnamedplus", "unnamed"}
 
 vim.opt.backup = false
@@ -45,5 +44,3 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.number = true
 vim.opt.relativenumber = true
-
-

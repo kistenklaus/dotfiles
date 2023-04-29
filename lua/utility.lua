@@ -18,7 +18,7 @@ function M.startswith(prefix, str)
   return string.sub(str, 1, string.len(prefix)) == prefix
 end
 
-function M.removeFileExtention(--[[required]]str, --[[optional]]ext)
+function M.removeFileExtension(--[[required]]str, --[[optional]]ext)
   ext = ext or ".lua"
   local extLen = string.len(ext)
   local strLen = string.len(str)
@@ -26,3 +26,4 @@ function M.removeFileExtention(--[[required]]str, --[[optional]]ext)
 end
 
 return M
+

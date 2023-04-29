@@ -5,7 +5,7 @@ local function configure()
   lsp.preset('recommended')
 
   local ls = require("utility").ls;
-  local trimExt = require("utility").removeFileExtention;
+  local trimExt = require("utility").removeFileExtension;
   local attachHandlers = ls(os.getenv("HOME") .. "/.config/nvim/lua/lsp_attach")
 
   local lsps = ls(os.getenv("HOME") .. "/.config/nvim/lua/lsp")
@@ -34,8 +34,8 @@ local function configure()
     vim.keymap.set("n", "<A-cr>", function() vim.lsp.buf.code_action() end, opts)
 
     vim.keymap.set("i", "<F18>", function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set("n", "<C-A-l>", function() vim.lsp.buf.format() end, opts)
     vim.keymap.set("n", "<F18>", function() vim.lsp.buf.rename() end, opts)
+    vim.keymap.set("n", "<C-A-l>", function() vim.lsp.buf.format() end, opts)
 
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
@@ -61,8 +61,9 @@ local function configure()
       { name = 'luasnip', keyword_length = 2 },
     },
     mapping = {
+
       -- `Enter` key to confirm completion
-      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
       -- Ctrl+Space to trigger completion menu
       ['<C-Space>'] = cmp.mapping.complete(),
       -- Navigate between snippet placeholder
@@ -78,8 +79,6 @@ local function configure()
     local opts = require(module_path)
     lspconfig[name].setup(opts)
   end
-
-
   lsp.setup()
 end
 
@@ -99,9 +98,9 @@ return {
     },
     { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
-    { "hrsh7th/cmp-path" },
 
     -- Autocompletion
+    { "hrsh7th/cmp-path" },
     { 'hrsh7th/nvim-cmp' },     -- Required
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
     { 'L3MON4D3/LuaSnip' },     -- Required
