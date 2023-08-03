@@ -21,6 +21,14 @@ local function configure()
       -- Instead of true it can also be a list of languages
       additional_vim_regex_highlighting = false,
     },
+    rainbow = {
+      enable = true,
+      -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+      extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+      max_file_lines = nil, -- Do not enable for files with more than n lines, int
+      -- colors = {}, -- table of hex strings
+      -- termcolors = {} -- table of colour name strings
+    },
   }
 end
 
@@ -30,5 +38,8 @@ return {
     local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
     ts_update()
   end,
+  requires = {
+    { "mrjones2014/nvim-ts-rainbow" },
+  },
   config = configure
 }

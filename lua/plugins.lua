@@ -21,29 +21,6 @@ return require('packer').startup(function(use)
     'wbthomason/packer.nvim',
   }
 
-  -- use(require "plugins.nvim-tree" )
-  --
-  -- use(require "plugins.bufferline" )
-  -- use(require "plugins.clangd_extentions")
-  -- use(require "plugins.compiler_explorer")
-  -- use(require "plugins.dap")
-  -- use(require "plugins.deadcolumn")
-  -- use(require "plugins.fugitive")
-  -- use(require "plugins.gitsigns")
-  -- use(require "plugins.harpoon")
-  -- use(require "plugins.lualine")
-  -- use(require "plugins.markdown-preview")
-  -- use(require "plugins.nvim-comment")
-  -- use(require "plugins.presence")
-  -- use(require "plugins.telescope")
-  -- use(require "plugins.toggleterm")
-  --
-  -- use(require "plugins.transparent")
-  -- use(require "plugins.treesitter")
-  -- use(require "plugins.undotree")
-  -- use(require "plugins.vim-templates")
-  -- use(require "plugins.wilder")
-
   for i = 1, #plugins do
     local module_path = "plugins."..trimExt(plugins[i])
     local status, ret = pcall(require, module_path)

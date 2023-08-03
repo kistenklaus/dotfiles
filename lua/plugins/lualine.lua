@@ -13,7 +13,7 @@ local function configure()
       },
       ignore_focus = {},
       always_divide_middle = true,
-      globalstatus = false,
+      globalstatus = true,
       refresh = {
         statusline = 1000,
         tabline = 1000,
@@ -21,10 +21,8 @@ local function configure()
       }
     },
     sections = {
-      lualine_a = {'mode'},
+      lualine_a = {'filename'},
       lualine_b = {'branch', 'diff', 'diagnostics'},
-      lualine_c = {'filename'},
-      lualine_x = {'encoding', 'fileformat', 'filetype'},
       lualine_y = {'progress'},
       lualine_z = {'location'}
     },
@@ -46,5 +44,4 @@ end
 return {
     'nvim-lualine/lualine.nvim',
     config = configure,
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 }

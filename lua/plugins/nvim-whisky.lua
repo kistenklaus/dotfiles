@@ -1,0 +1,4 @@
+return {
+  'javiorfo/nvim-whisky'
+}
+

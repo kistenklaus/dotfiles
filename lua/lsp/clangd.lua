@@ -1,15 +1,18 @@
 local lspconfig = require("lspconfig")
 
 return {
-  cmd = { "clangd" },
+  cmd = {
+    "clangd",
+    "--query-driver=/usr/arm-none-eabi/include/**,/usr/arm-none-eabi/include/c++/12.2.0/**,/usr/arm-none-eabi/include/c++/12.2.0/arm-none-eabi/**"
+  },
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
   root_dir = lspconfig.util.root_pattern(
-          '.clangd',
-          '.clang-tidy',
-          '.clang-format',
-          'compile_commands.json',
-          'compile_flags.txt',
-          'configure.ac',
-          '.git'
-        )
+    '.clangd',
+    '.clang-tidy',
+    '.clang-format',
+    'compile_commands.json',
+    'compile_flags.txt',
+    'configure.ac',
+    '.git'
+  )
 }

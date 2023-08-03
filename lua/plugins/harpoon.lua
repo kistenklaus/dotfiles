@@ -14,6 +14,7 @@ end
 
 return {
   "ThePrimeagen/harpoon",
+  disable = true,
   config = configure,
   keys = {"<A-h>", "<A-e>", "<A-1>", "<A-2>", "<A-3>", "<A-4>"}
 }

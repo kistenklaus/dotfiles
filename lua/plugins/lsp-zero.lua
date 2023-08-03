@@ -61,7 +61,6 @@ local function configure()
       { name = 'luasnip', keyword_length = 2 },
     },
     mapping = {
-
       -- `Enter` key to confirm completion
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       -- Ctrl+Space to trigger completion menu
