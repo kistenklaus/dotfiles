@@ -19,7 +19,7 @@ local function configure()
   map("n", "<A-9>", ":BufferGoto 9<cr>", opts)
   map("n", "<A-0>", ":BufferLast<cr>", opts)
   map("n", "<A-d>", ":BufferClose<cr>", opts)
-  map("n", "<A-D>", ":BufferCloseAllButCurrent<cr>", opts)
+  map("n", "<A-D>", ":BufferCloseAllButCurrentOrPinned<cr>", opts)
 
   map("n", "<A-L>", ":BufferMoveNext<cr>", opts)
   map("n", "<A-H>", ":BufferMovePrevious<cr>", opts)

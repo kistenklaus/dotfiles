@@ -22,7 +22,8 @@ local function configure()
     },
   })
   local api = require("nvim-tree.api")
-  vim.keymap.set('n', '<leader>e', api.tree.toggle, { noremap = true })
+  vim.keymap.set('n', '<leader>e', api.tree.toggle, { noremap = true , silent = true, nowait = true})
+  vim.keymap.set('n', '?',     api.tree.toggle_help,  {noremap = true ,silent = true, nowait = true})
 end
 
 return {
