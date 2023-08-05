@@ -139,8 +139,9 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 alias vim="nvim"
 alias v="nvim"
-alias ll="exa -lHmbgha"
-alias la="ls -a"
+alias ll="exa -lmbha --git --no-time --no-filesize --no-user --icons --group-directories-first"
+alias la="exa -G --icons -a"
+alias ls="exa -G --icons --git-ignore"
 
 function ex {
 if [ -z "$1" ]; then
