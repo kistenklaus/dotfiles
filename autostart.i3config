@@ -25,10 +25,8 @@ exec --no-startup-id mailspring -b
 exec --no-startup-id blueman-applet
 # exec --no-startup-id pamac-tray
 # exec --no-startup-id clipit
+#
 exec_always $HOME/.config/i3/polybar/launch.sh
 
 #assign wallpaper
-exec_always dwall -s tokyo
-
-
-exec discord
+exec_always $HOME/.config/i3/random_wallpaper.sh
