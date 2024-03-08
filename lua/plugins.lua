@@ -15,6 +15,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use {
@@ -22,7 +23,7 @@ return require('packer').startup(function(use)
   }
 
   for i = 1, #plugins do
-    local module_path = "plugins."..trimExt(plugins[i])
+    local module_path = "plugins." .. trimExt(plugins[i])
     local status, ret = pcall(require, module_path)
     if status then
       use(ret)
@@ -30,6 +31,7 @@ return require('packer').startup(function(use)
       print(ret)
     end
   end
+
 
   if packer_bootstrap then
     require('packer').sync()

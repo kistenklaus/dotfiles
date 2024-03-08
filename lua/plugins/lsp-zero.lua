@@ -42,6 +42,9 @@ local function configure()
     vim.keymap.set("n", "<C-K>", function() vim.diagnostic.open_float() end, opts)
     vim.keymap.set("i", "<C-K>", function() vim.diagnostic.open_float() end, opts)
 
+    vim.keymap.set("n", "<A-Right>", function() vim.diagnostic.goto_next() end, opts)
+    vim.keymap.set("n", "<A-Left>", function() vim.diagnostic.goto_prev() end, opts)
+
     for i = 1, #attachHandlers do
       local name = trimExt(attachHandlers[i])
       if name == client.name then
