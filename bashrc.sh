@@ -139,9 +139,9 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 alias vim="nvim"
 alias v="nvim"
-alias ll="exa -lmbha --git --no-time --no-filesize --no-user --icons --group-directories-first"
+alias ll="exa -lmbha --no-time --no-filesize --no-user --icons --group-directories-first"
 alias la="exa -G --icons -a"
-alias ls="exa -G --icons --git-ignore"
+alias ls="exa -G --icons"
 
 function ex {
 if [ -z "$1" ]; then
@@ -187,3 +187,6 @@ export CPATH="$(clang -v 2>&1 | grep "Selected GCC installation" | rev | cut -d'
 
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
+export PATH=$PATH:/usr/local/go/bin
+
+alias loc="$HOME/Documents/muzero/line-of-code.sh"
