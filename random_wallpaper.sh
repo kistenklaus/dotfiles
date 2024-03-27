@@ -83,6 +83,9 @@ case $WALLPAPER_ID in
   23)
     dwall -s street
     ;;
+  24)
+    feh --bg-scale ~/Pictures/mu-zero-siii-atlas.jpg
+    ;;
   *)
     dwall -s tokyo
     ;;
